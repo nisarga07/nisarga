@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Nisarga Shashidhar — DevOps Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0a0c10;
+    --surface: #111318;
+    --surface2: #181c23;
+    --border: rgba(255,255,255,0.07);
+    --accent: #00e5a0;
+    --accent2: #0af;
+    --text: #e8eaf0;
+    --muted: #7a8090;
+    --heading: #ffffff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.6;
+  }
+
+  /* ── GRID BACKGROUND ── */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,160,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,160,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 4rem;
+    background: rgba(10,12,16,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--heading);
+    letter-spacing: -0.02em;
+  }
+
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ── SECTIONS ── */
+  section {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 3rem;
+  }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 6rem;
+    padding-bottom: 4rem;
+    max-width: 1100px;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.2s;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: inline-block;
+    width: 2rem;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    line-height: 0.95;
+    color: var(--heading);
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.35s;
+  }
+
+  h1 em {
+    font-style: normal;
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--accent);
+  }
+
+  .hero-desc {
+    max-width: 560px;
+    font-size: 1.05rem;
+    color: var(--muted);
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.5s;
+  }
+
+  .hero-certs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.65s;
+  }
+
+  .cert-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.4rem 0.9rem;
+    border: 1px solid rgba(0,229,160,0.3);
+    border-radius: 2px;
+    color: var(--accent);
+    background: rgba(0,229,160,0.05);
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.8s;
+  }
+
+  .btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.85rem 2rem;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: all 0.25s;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #000;
+  }
+
+  .btn-primary:hover {
+    background: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(0,229,160,0.3);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  .btn-outline:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  /* ── SECTION HEADERS ── */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 3rem;
+    padding-top: 6rem;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--heading);
+    letter-spacing: -0.02em;
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── SKILLS GRID ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-bottom: 6rem;
+  }
+
+  .skill-card {
+    background: var(--surface);
+    padding: 1.75rem;
+    transition: background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .skill-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+
+  .skill-card:hover::before { transform: scaleX(1); }
+  .skill-card:hover { background: var(--surface2); }
+
+  .skill-icon {
+    font-size: 1.4rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .skill-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--heading);
+    margin-bottom: 0.4rem;
+  }
+
+  .skill-desc {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ── EXPERIENCE ── */
+  .experience-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-bottom: 6rem;
+  }
+
+  .exp-card {
+    background: var(--surface);
+    padding: 2.25rem 2.5rem;
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 2.5rem;
+    transition: background 0.2s;
+    position: relative;
+  }
+
+  .exp-card:hover { background: var(--surface2); }
+
+  .exp-card::after {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, var(--accent), var(--accent2));
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.4s;
+  }
+
+  .exp-card:hover::after { transform: scaleY(1); }
+
+  .exp-meta { padding-top: 0.1rem; }
+
+  .exp-company {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--heading);
+    margin-bottom: 0.3rem;
+  }
+
+  .exp-location {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    margin-bottom: 0.6rem;
+  }
+
+  .exp-date {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    background: rgba(0,229,160,0.08);
+    border: 1px solid rgba(0,229,160,0.2);
+    padding: 0.25rem 0.6rem;
+    border-radius: 2px;
+  }
+
+  .exp-role {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--heading);
+    margin-bottom: 1rem;
+  }
+
+  .exp-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .exp-bullets li {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.65;
+    padding-left: 1.25rem;
+    position: relative;
+  }
+
+  .exp-bullets li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .exp-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+  }
+
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+  }
+
+  /* ── METRICS ── */
+  .metrics-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-bottom: 6rem;
+  }
+
+  .metric-card {
+    background: var(--surface);
+    padding: 2rem 1.5rem;
+    text-align: center;
+    transition: background 0.2s;
+  }
+
+  .metric-card:hover { background: var(--surface2); }
+
+  .metric-num {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 2.8rem;
+    color: var(--accent);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.4rem;
+  }
+
+  .metric-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* ── EDUCATION & CERTS ── */
+  .edu-cert-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-bottom: 6rem;
+  }
+
+  .edu-cert-panel {
+    background: var(--surface);
+    padding: 2.25rem;
+  }
+
+  .panel-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+  }
+
+  .edu-item {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .edu-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+  .edu-degree {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--heading);
+    margin-bottom: 0.25rem;
+  }
+
+  .edu-school {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-bottom: 0.2rem;
+  }
+
+  .edu-year {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+  }
+
+  .cert-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .cert-item {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.9rem 1rem;
+    background: rgba(0,229,160,0.04);
+    border: 1px solid rgba(0,229,160,0.12);
+    border-radius: 2px;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .cert-item:hover {
+    background: rgba(0,229,160,0.08);
+    border-color: rgba(0,229,160,0.3);
+  }
+
+  .cert-icon { font-size: 1.2rem; }
+
+  .cert-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--heading);
+    line-height: 1.2;
+  }
+
+  .cert-body {
+    font-size: 0.72rem;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ── CONTACT ── */
+  #contact {
+    padding-bottom: 6rem;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .contact-left {
+    background: var(--surface);
+    padding: 3rem;
+  }
+
+  .contact-tagline {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.8rem;
+    color: var(--heading);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 1.25rem;
+  }
+
+  .contact-tagline span { color: var(--accent); }
+
+  .contact-body {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    line-height: 1.75;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .contact-link:hover { color: var(--accent); }
+
+  .contact-link-icon {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    min-width: 60px;
+  }
+
+  .contact-right {
+    background: var(--surface2);
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 1.5rem;
+  }
+
+  .avail-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .avail-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .location-text {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 2rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-left {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--muted);
+    letter-spacing: 0.07em;
+  }
+
+  .footer-right {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--muted);
+    letter-spacing: 0.07em;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: rgba(0,229,160,0.3); border-radius: 2px; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1.25rem 2rem; }
+    .nav-links { gap: 1.5rem; }
+    section { padding: 0 1.5rem; }
+    .exp-card { grid-template-columns: 1fr; gap: 1rem; }
+    .metrics-row { grid-template-columns: repeat(2, 1fr); }
+    .edu-cert-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 1.5rem 2rem; }
+  }
+
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+    h1 { font-size: 2.8rem; }
+    .metrics-row { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">NS<span>.</span></div>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero" style="max-width:1100px;margin:0 auto;padding:0 3rem;">
+  <div class="hero-tag">DevOps Engineer · 6+ Years</div>
+  <h1>Nisarga<br/><em>Shashidhar</em></h1>
+  <p class="hero-desc">
+    Building and owning cloud infrastructure for payments and fintech platforms.
+    Full DevOps lifecycle across AWS, Azure, and GCP — from provisioning to observability,
+    GitOps to FinOps.
+  </p>
+  <div class="hero-certs">
+    <span class="cert-badge">AWS SA Professional</span>
+    <span class="cert-badge">CKA</span>
+    <span class="cert-badge">Terraform Associate</span>
+    <span class="cert-badge">Azure Fundamentals</span>
+  </div>
+  <div class="hero-actions">
+    <a href="#contact" class="btn btn-primary">Get in touch</a>
+    <a href="#experience" class="btn btn-outline">View experience</a>
+  </div>
+</section>
+
+<!-- METRICS -->
+<section>
+  <div class="metrics-row reveal">
+    <div class="metric-card">
+      <div class="metric-num">6+</div>
+      <div class="metric-label">Years Experience</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-num">75%</div>
+      <div class="metric-label">Cloud Cost Reduction</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-num">40+</div>
+      <div class="metric-label">Microservices Managed</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-num">40%</div>
+      <div class="metric-label">Faster Deployments</div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header reveal">
+    <span class="section-label">01</span>
+    <h2 class="section-title">Core Competencies</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="skills-grid reveal">
+    <div class="skill-card">
+      <div class="skill-icon">☁️</div>
+      <div class="skill-name">Cloud Infrastructure</div>
+      <div class="skill-desc">AWS (EC2, EKS, RDS, ElastiCache, VPC), Azure, GCP — multi-account, multi-environment architecture.</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">⚙️</div>
+      <div class="skill-name">Kubernetes & Containers</div>
+      <div class="skill-desc">GKE, EKS, Docker, Helm — running production-grade workloads at scale with full lifecycle ownership.</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🏗️</div>
+      <div class="skill-name">Infrastructure as Code</div>
+      <div class="skill-desc">Terraform, Ansible, CloudFormation — repeatable, policy-compliant infrastructure provisioning.</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🚀</div>
+      <div class="skill-name">CI/CD & GitOps</div>
+      <div class="skill-desc">Jenkins, Tekton, ArgoCD, CodePipeline — automated pipelines with validation gates and rollback strategies.</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">📊</div>
+      <div class="skill-name">Observability</div>
+      <div class="skill-desc">Splunk, Prometheus, Grafana, DataDog — SLO tracking, dashboards, alerting, and post-mortem culture.</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🔒</div>
+      <div class="skill-name">DevSecOps</div>
+      <div class="skill-desc">IAM, KMS, GuardDuty, SAST (Checkmarx, SonarQube), PCI-DSS compliance embedded in every pipeline.</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🗄️</div>
+      <div class="skill-name">Databases</div>
+      <div class="skill-desc">MySQL, PostgreSQL, Amazon RDS, ElastiCache, Redshift, Oracle — HA config, tuning, backup compliance.</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🌐</div>
+      <div class="skill-name">AWS Networking</div>
+      <div class="skill-desc">VPC architecture, Route 53, ELB, CloudFront, Security Groups — secure, highly available network design.</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🐍</div>
+      <div class="skill-name">Scripting & Automation</div>
+      <div class="skill-desc">Python (Boto3), Shell/Bash, AWS Lambda — scalable automation for infrastructure operations.</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">💰</div>
+      <div class="skill-name">FinOps</div>
+      <div class="skill-desc">Rightsizing, commitment-based discounts, policy-as-code — delivering significant cost reductions across clouds.</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">💳</div>
+      <div class="skill-name">Payments & Fintech</div>
+      <div class="skill-desc">Production experience at Fexco (global payments & FX) and TerraAlto (AWS Advanced Partner).</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🐧</div>
+      <div class="skill-name">Linux Systems Admin</div>
+      <div class="skill-desc">System configuration, performance tuning, 24×7 on-call, incident handling, and RCA reporting.</div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-header reveal">
+    <span class="section-label">02</span>
+    <h2 class="section-title">Experience</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="experience-list reveal">
+
+    <!-- Fexco -->
+    <div class="exp-card">
+      <div class="exp-meta">
+        <div class="exp-company">Fexco</div>
+        <div class="exp-location">Kerry, Ireland</div>
+        <div class="exp-date">Mar 2025 – Present</div>
+      </div>
+      <div class="exp-content">
+        <div class="exp-role">DevOps Engineer</div>
+        <ul class="exp-bullets">
+          <li>Owned end-to-end DevOps for mission-critical payments infrastructure — GKE Kubernetes platform (dev/stage/prod) running 40+ microservices on GCP with Helm.</li>
+          <li>Reduced deployment lead time by <strong style="color:var(--accent)">40%</strong> building Jenkins, Tekton, and ArgoCD GitOps pipelines with validation gates and automated rollbacks.</li>
+          <li>Established full-stack observability using Splunk, Prometheus, and Grafana — SLO tracking, dashboards, and alerting; championed post-mortem culture.</li>
+          <li>Owned FinOps strategy across Azure and GCP — delivering <strong style="color:var(--accent)">75% cloud cost reduction</strong> through rightsizing, commitment-based discounts, and policy-as-code.</li>
+          <li>Enforced DevSecOps across the SDLC — SAST, IaC scanning (Checkmarx, SonarQube), and PCI-DSS-aligned compliance checks in every pipeline stage.</li>
+        </ul>
+        <div class="exp-tags">
+          <span class="tag">GKE</span><span class="tag">ArgoCD</span><span class="tag">Tekton</span><span class="tag">Jenkins</span><span class="tag">Splunk</span><span class="tag">Prometheus</span><span class="tag">Grafana</span><span class="tag">Helm</span><span class="tag">PCI-DSS</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- TerraAlto -->
+    <div class="exp-card">
+      <div class="exp-meta">
+        <div class="exp-company">TerraAlto</div>
+        <div class="exp-location">Dublin, Ireland</div>
+        <div class="exp-date">Jun 2022 – Sep 2024</div>
+      </div>
+      <div class="exp-content">
+        <div class="exp-role">Cloud Ops Engineer</div>
+        <ul class="exp-bullets">
+          <li>Owned AWS infrastructure for 3 enterprise client environments — multi-account setups with EC2, EKS, ECS, RDS, ElastiCache, and HA workloads across complex VPC topologies.</li>
+          <li>Delivered <strong style="color:var(--accent)">55% AWS cost reduction</strong> through VPC redesign, EC2 rightsizing, Reserved Instance planning, and Auto Scaling — zero unplanned downtime.</li>
+          <li>Managed enterprise databases including MySQL, PostgreSQL, RDS, ElastiCache, Redshift, and Oracle — performance tuning, HA configuration, and backup compliance.</li>
+          <li>Automated infrastructure using Terraform, Ansible, Python (Boto3), Shell scripts, and AWS Lambda — 100% governance compliance.</li>
+          <li>Hardened AWS security posture with IAM, KMS, Secrets Manager, GuardDuty, Shield, SSO, and ACM.</li>
+          <li>Participated in 24×7 on-call — incident handling, RCA, and post-mortem reporting.</li>
+        </ul>
+        <div class="exp-tags">
+          <span class="tag">AWS</span><span class="tag">EKS</span><span class="tag">Terraform</span><span class="tag">Ansible</span><span class="tag">Python</span><span class="tag">RDS</span><span class="tag">GuardDuty</span><span class="tag">KMS</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Technotharanga -->
+    <div class="exp-card">
+      <div class="exp-meta">
+        <div class="exp-company">Technotharanga Solutions</div>
+        <div class="exp-location">India</div>
+        <div class="exp-date">Aug 2018 – Jun 2021</div>
+      </div>
+      <div class="exp-content">
+        <div class="exp-role">Software Engineer — DevOps & AWS</div>
+        <ul class="exp-bullets">
+          <li>Led CI/CD transformation within a 6–8 engineer team using Jenkins — Terraform and Ansible automation enabling multiple deployments per week, significantly reducing release failures.</li>
+          <li>Administered Linux production environments — system configuration, performance tuning, troubleshooting, and monitoring across dev and production systems.</li>
+          <li>Recognised with <strong style="color:var(--accent)">Best Employee Award (2020)</strong> for outstanding impact in DevOps automation and cross-team engineering influence.</li>
+        </ul>
+        <div class="exp-tags">
+          <span class="tag">Jenkins</span><span class="tag">Terraform</span><span class="tag">Ansible</span><span class="tag">Linux</span><span class="tag">AWS</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tharanga -->
+    <div class="exp-card">
+      <div class="exp-meta">
+        <div class="exp-company">Tharanga Technologies</div>
+        <div class="exp-location">India</div>
+        <div class="exp-date">Jan 2018 – Jul 2018</div>
+      </div>
+      <div class="exp-content">
+        <div class="exp-role">Trainee Engineer — Linux</div>
+        <ul class="exp-bullets">
+          <li>Installed, configured, and maintained Unix/Linux systems — managing hardware, software, monitoring, and upgrades as part of a systems administration team.</li>
+        </ul>
+        <div class="exp-tags">
+          <span class="tag">Linux</span><span class="tag">Unix</span><span class="tag">Sysadmin</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EDUCATION & CERTIFICATIONS -->
+<section id="education">
+  <div class="section-header reveal">
+    <span class="section-label">03</span>
+    <h2 class="section-title">Education & Certifications</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="edu-cert-grid reveal">
+    <div class="edu-cert-panel">
+      <div class="panel-title">Education</div>
+      <div class="edu-item">
+        <div class="edu-degree">MSc in Cloud Computing</div>
+        <div class="edu-school">National College of Ireland, Dublin</div>
+        <div class="edu-year">Sep 2021 – Jan 2023</div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-degree">BE in Computer Science & Engineering</div>
+        <div class="edu-school">Visvesvaraya Technological University, India</div>
+        <div class="edu-year">2014 – 2018</div>
+      </div>
+      <div style="margin-top:2rem;">
+        <div class="panel-title">Achievements</div>
+        <div style="margin-top:1rem;display:flex;flex-direction:column;gap:0.75rem;">
+          <div style="font-size:0.85rem;color:var(--muted);padding-left:1rem;border-left:2px solid var(--accent);">
+            <strong style="color:var(--text);">Best Employee Award 2020</strong><br/>
+            Technotharanga Solutions — DevOps automation & cloud delivery excellence.
+          </div>
+          <div style="font-size:0.85rem;color:var(--muted);padding-left:1rem;border-left:2px solid rgba(0,170,255,0.5);">
+            <strong style="color:var(--text);">Technical Paper Presenter</strong><br/>
+            "DNA Data Storage" — National-Level Symposium, KNEW, CIT Karnataka.
+          </div>
+          <div style="font-size:0.85rem;color:var(--muted);padding-left:1rem;border-left:2px solid rgba(255,255,255,0.15);">
+            <strong style="color:var(--text);">Conference Participant</strong><br/>
+            Trusted Computing in Defence — 10th National Conference, Computer Society of India.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="edu-cert-panel">
+      <div class="panel-title">Certifications</div>
+      <div class="cert-list">
+        <div class="cert-item">
+          <div class="cert-icon">🏆</div>
+          <div>
+            <div class="cert-name">AWS Solutions Architect</div>
+            <div class="cert-body">Professional · Amazon Web Services</div>
+          </div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-icon">☸️</div>
+          <div>
+            <div class="cert-name">Certified Kubernetes Administrator</div>
+            <div class="cert-body">CKA · Cloud Native Computing Foundation</div>
+          </div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-icon">🏗️</div>
+          <div>
+            <div class="cert-name">Terraform Associate</div>
+            <div class="cert-body">HashiCorp Certified · Infrastructure Automation</div>
+          </div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-icon">☁️</div>
+          <div>
+            <div class="cert-name">Azure Fundamentals</div>
+            <div class="cert-body">AZ-900 · Microsoft Azure</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header reveal">
+    <span class="section-label">04</span>
+    <h2 class="section-title">Contact</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="contact-grid reveal">
+    <div class="contact-left">
+      <div class="contact-tagline">Let's build<br/><span>reliable infra</span><br/>together.</div>
+      <p class="contact-body">
+        Open to senior DevOps, Cloud Infrastructure, and Platform Engineering roles — especially in fintech, payments, and high-scale product companies.
+      </p>
+      <div class="contact-links">
+        <a href="mailto:nisarga849@gmail.com" class="contact-link">
+          <span class="contact-link-icon">Email</span>
+          nisarga849@gmail.com
+        </a>
+        <a href="tel:+919980285960" class="contact-link">
+          <span class="contact-link-icon">Phone</span>
+          +91 99802 85960
+        </a>
+        <a href="https://linkedin.com/in/nisarga-shashidhar-25115b223" target="_blank" class="contact-link">
+          <span class="contact-link-icon">LinkedIn</span>
+          nisarga-shashidhar-25115b223
+        </a>
+      </div>
+    </div>
+    <div class="contact-right">
+      <div class="avail-badge">
+        <div class="avail-dot"></div>
+        Open to opportunities
+      </div>
+      <div class="location-text">
+        📍 Bengaluru, Karnataka, India<br/><br/>
+        <span style="color:var(--accent);">AWS · GCP · Azure</span><br/>
+        Multi-cloud infrastructure specialist<br/>
+        with fintech domain expertise.
+      </div>
+      <a href="mailto:nisarga849@gmail.com" class="btn btn-primary" style="width:100%;text-align:center;">
+        Send a message →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">© 2025 Nisarga Shashidhar — DevOps Engineer</div>
+  <div class="footer-right">AWS SA Pro · CKA · Terraform Associate · Azure</div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
